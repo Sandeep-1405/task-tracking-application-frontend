@@ -17,7 +17,7 @@ const Login = () => {
         const response = await axios.post('http://localhost:3001/login',{email,password});
         console.log(response);
         localStorage.setItem('jwt',response.data.jwtToken);
-        navigate('/')
+        navigate('/home')
     }catch(error){
         console.log(error)
     }
