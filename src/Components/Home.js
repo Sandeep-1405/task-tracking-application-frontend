@@ -156,7 +156,7 @@ const Home = () => {
                   </p>
 
                   <div className="bg-light p-3 rounded">
-                    <ul className="list-unstyled mb-0">
+                    <ul className="list-unstyled mb-0 " style={{color: new Date(task.dueDate) < new Date() ? "red" : "inherit"}}>
                       <li>
                         <strong>Due Date:</strong>{" "}
                         {new Date(task.dueDate).toLocaleDateString()}
