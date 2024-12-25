@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import HOC from './Components/Hoc';
 
 const AddTask = () => {
     const [task, setTask] = useState({
@@ -11,6 +12,7 @@ const AddTask = () => {
         priority: 'Low',
     });
 
+    const url = process.env.REACT_APP_BACKEND_URL;
     const jwt = localStorage.getItem('jwt');
     const navigate = useNavigate();
 
@@ -23,12 +25,12 @@ const AddTask = () => {
         e.preventDefault();
         //console.log(task);
         try{
-            const response = await axios.post('http://localhost:3001/tasks',task,{
+            const response = await axios.post(`${url}/tasks`,task,{
                 headers:{
                     'Authorization': `Bearer ${jwt}`
                 }
             })
-            navigate('/home')
+            navigate('/')
             setTask({ name: '', description: '', dueDate: '', status: 'Pending', priority: 'Low' });
         }catch(error){
             console.log(error);
@@ -124,8 +126,15 @@ const AddTask = () => {
                 </div>
 
                 <div className="col-12 text-center">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary m-3">
                         Add Task
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-secondary m-3"
+                        onClick={() => navigate('/')}
+                    >
+                        Back
                     </button>
                 </div>
             </form>
@@ -133,4 +142,4 @@ const AddTask = () => {
     );
 };
 
-export default AddTask;
+export default HOC(AddTask);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import HOC from './Hoc';
 
 const Update = () => {
     const [name, setName] = useState('');
@@ -13,12 +14,13 @@ const Update = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const jwt = localStorage.getItem('jwt');
+    const url = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         const fetchTaskDetailsById = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:3001/tasks/${id}`,
+                    `${url}/tasks/${id}`,
                     { headers: { Authorization: `Bearer ${jwt}` } }
                 );
                 console.log(res);
@@ -32,7 +34,7 @@ const Update = () => {
                 setStatus(res.data.task.status);
                 setPriority(res.data.task.priority);
             } catch (error) {
-                console.error('Error fetching task details:', error);
+                console.error(error);
             }
         };
         fetchTaskDetailsById();
@@ -43,11 +45,11 @@ const Update = () => {
         e.preventDefault();
         try {
             await axios.put(
-                `http://localhost:3001/tasks/${id}`,
+                `${url}/tasks/${id}`,
                 { name, description, dueDate, status, priority },{headers:{'Authorization': `Bearer ${jwt}`}}
             );
             alert('Task updated successfully!');
-            navigate('/home'); 
+            navigate('/'); 
         } catch (error) {
             console.error(error);
             //alert('Failed to update task. Please try again.');
@@ -139,7 +141,7 @@ const Update = () => {
                     <button
                         type="button"
                         className="btn btn-secondary w-25"
-                        onClick={() => navigate('/home')}
+                        onClick={() => navigate('/')}
                     >
                         Back
                     </button>
@@ -149,4 +151,4 @@ const Update = () => {
     );
 };
 
-export default Update;
+export default HOC(Update);
