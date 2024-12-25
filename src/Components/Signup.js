@@ -29,7 +29,8 @@ const Signup = () => {
         console.log(response);
         navigate('/login');
     }catch(error){
-        console.log(error)
+      alert(error?.response?.data?.message)
+      console.log(error)
     }
   };
 

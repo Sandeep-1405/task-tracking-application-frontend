@@ -19,7 +19,8 @@ const Login = () => {
         localStorage.setItem('jwt',response.data.jwtToken);
         navigate('/')
     }catch(error){
-        console.log(error)
+      alert(error?.response?.data?.message)
+      console.log(error)
     }
   };
 
