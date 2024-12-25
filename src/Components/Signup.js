@@ -14,6 +14,7 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useNavigate();
+  const url = process.env.REACT_APP_BACKEND_URL;
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -24,7 +25,7 @@ const Signup = () => {
     }
 
     try{
-        const response = await axios.post('http://localhost:3001/register',{name,email,password});
+        const response = await axios.post(`${url}/register`,{name,email,password});
         console.log(response);
         navigate('/login');
     }catch(error){

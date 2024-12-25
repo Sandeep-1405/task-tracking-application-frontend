@@ -9,12 +9,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
+  const url = process.env.REACT_APP_BACKEND_URL;
 
   const handleLogin = async(e) => {
     e.preventDefault();
     try{
-        const response = await axios.post('http://localhost:3001/login',{email,password});
+        const response = await axios.post(`${url}/login`,{email,password});
         console.log(response);
         localStorage.setItem('jwt',response.data.jwtToken);
         navigate('/')
